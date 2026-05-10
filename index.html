@@ -39,6 +39,7 @@
 html { scroll-behavior: smooth; }
 
 body {
+    -webkit-font-smoothing: antialiased;
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
@@ -585,13 +586,11 @@ footer {
 }
 
 .lightbox img {
-    max-width: 95vw;
-    height: auto;
-    max-height: 95vw;
+    max-width: 95%;
+    max-height: 95%;
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     animation: zoomIn 0.3s ease;
-    object-fit: contain;
 }
 
 @keyframes zoomIn {
@@ -638,12 +637,15 @@ footer {
     .hero {
         padding: 80px 6% 60px;
     }
-    
+
     .typing-text {
-        white-space: normal;
-        border-right: none;
-        animation: fadeIn 1s ease-out 1s forwards;
-    }
+    display: inline-block;
+    color: var(--accent);
+    border-right: 3px solid var(--accent);
+    white-space: normal;
+    overflow: hidden;
+    word-break: break-word;
+}
     
     .grid {
         grid-template-columns: 1fr;
@@ -664,11 +666,82 @@ footer {
         flex-direction: column;
         align-items: center;
     }
+
+    /* CUSTOM SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 20px;
+}
+
+/* ACTIVE NAV LINKS */
+nav a.active {
+    color: var(--accent);
+}
+
+/* MOBILE MENU OVERLAY */
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+    z-index: 99;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* BETTER CARD EFFECT */
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(56,189,248,0.08),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+/* BETTER BUTTON EFFECT */
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* FIX IMAGE OVERFLOW */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* BETTER MOBILE TEXT */
+.hero h1,
+.hero p {
+    word-break: break-word;
+}
 }
 </style>
 </head>
 
 <body data-theme="dark">
+    
 
 <!-- LOADING SCREEN -->
 <div id="loader">
@@ -695,6 +768,8 @@ footer {
         <span></span>
     </div>
 </nav>
+
+<div class="menu-overlay" id="menuOverlay"></div>
 
 <!-- HERO -->
 <div class="hero" id="parallax-hero">
@@ -774,12 +849,12 @@ footer {
         <div class="card fade-in">
             <h3>Business Landing Page</h3>
             <p>Modern landing page that increased client leads by 40% in 2 weeks for a Lagos fashion brand.</p>
-            <a href="#" class="project-link">View Project <span>→</span></a>
+            <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
         </div>
         <div class="card fade-in-right">
             <h3>Login Page UI</h3>
             <p>Minimal and accessible login form with form validation and dark mode support.</p>
-            <a href="#" class="project-link">View Project <span>→</span></a>
+            <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
         </div>
     </div>
 </section>
@@ -889,19 +964,25 @@ window.addEventListener('load', () => {
 // MOBILE HAMBURGER MENU
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
+const menuOverlay = document.getElementById('menuOverlay');
 
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navLinks.classList.toggle('active');
+    menuOverlay.classList.toggle('active');
 });
 
 function closeMenu() {
     hamburger.classList.remove('active');
     navLinks.classList.remove('active');
+    menuOverlay.classList.remove('active');
 }
 
+menuOverlay.addEventListener('click', closeMenu);
+
 document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+    if (!hamburger.contains(e.target) &&
+        !navLinks.contains(e.target)) {
         closeMenu();
     }
 });
@@ -933,6 +1014,28 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
     observer.observe(el);
+});
+// ACTIVE NAV LINK ON SCROLL
+const sections = document.querySelectorAll('section');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 200;
+
+        if (scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
 });
 
 // TESTIMONIAL CAROUSEL
@@ -1001,6 +1104,14 @@ document.querySelectorAll('.view-img').forEach(link => {
 lightbox.addEventListener('click', () => {
     lightbox.classList.remove('active');
 });
+// CLOSE LIGHTBOX WITH ESC KEY
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        lightbox.classList.remove('active');
+    }
+});
+
+
 </script>
 
 </body>
