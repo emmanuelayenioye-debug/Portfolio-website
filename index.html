@@ -24,7 +24,7 @@
     --bg: #f8fafc;
     --bg-dark: #ffffff;
     --card: #ffffff;
-    --accent: #0ea5e9;
+    --accent: #5ab6e0;
     --text: #1e293b;
     --text-muted: #64748b;
     --border: #e2e8f0;
@@ -136,6 +136,20 @@ nav h2 {
     font-weight: 800;
     font-size: 1.5rem;
     animation: float 4s ease-in-out infinite;
+}
+
+.logo-img img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    animation: float 4s ease-in-out infinite;
+}
+
+.logo-img:hover img {
+    transform: scale(1.1);
+    border-color: #fff;
 }
 
 @keyframes float {
@@ -293,7 +307,7 @@ nav a:hover::after { width: 100%; }
     min-width: 150px;
 }
 
-[data-theme="light"] .btn { color: #fff; }
+[data-theme="light"] .btn { color: rgba(0, 1, 1, 0.708); }
 
 .btn:hover {
     transform: translateY(-6px) scale(1.05);
@@ -395,6 +409,21 @@ section {
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
+}
+
+.project-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .project-img {
+        height: 160px;
+    }
 }
 
 /* TESTIMONIAL CAROUSEL */
@@ -754,7 +783,9 @@ img {
 
 <!-- NAVBAR -->
 <nav class="fade-in">
-    <h2>AE</h2>
+    <a href="#" class="logo-img">
+    <img src="card.jpg" alt="AYENIOYE EMMANUEL">
+</a>
     <div class="nav-links" id="navLinks">
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#services" onclick="closeMenu()">Services</a>
@@ -794,8 +825,8 @@ img {
 <div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
   <ins class="adsbygoogle"
        style="display:block"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXX"
-       data-ad-slot="XXXXXXXXXX"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
@@ -856,18 +887,21 @@ img {
     </div>
     <div class="grid">
         <div class="card fade-in-left">
-            <h3>School Website</h3>
-            <p>Clean and responsive homepage for a private secondary school with admissions form and gallery.</p>
-            <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
-        </div>
+             <img src="999.jpeg" alt="School Website" class="project-img">
+             <h3>School Website</h3>
+             <p>Clean and responsive homepage for a private secondary school with admissions form and gallery.</p>
+             <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
+    </div>
         <div class="card fade-in">
+            <img src="999.jpeg" alt="Farm Website" class="project-img">
             <h3>Business Landing Page</h3>
             <p>Modern landing page that increased client leads by 40% in 2 weeks for a Lagos fashion brand.</p>
             <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
         </div>
         <div class="card fade-in-right">
+            <img src="999.jpeg" alt="Login Page" class="project-img">
             <h3>Login Page UI</h3>
-            <p>Minimal and accessible login form with form validation and dark mode support.</p>
+            <p>Minimal and accessible login form with form validation, accessible inputs, dark mode support.</p>
             <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
         </div>
     </div>
@@ -876,8 +910,8 @@ img {
 <div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
   <ins class="adsbygoogle"
        style="display:block"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXX"
-       data-ad-slot="XXXXXXXXXX"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
@@ -973,8 +1007,8 @@ img {
 <div style="max-width: 1100px; margin: 50px auto 0; padding: 0 6%;">
   <ins class="adsbygoogle"
        style="display:block"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXX"
-       data-ad-slot="XXXXXXXXXX"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
