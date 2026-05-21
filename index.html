@@ -426,6 +426,23 @@ section {
     }
 }
 
+.project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
 /* TESTIMONIAL CAROUSEL */
 .testimonials {
     max-width: 900px;
@@ -890,19 +907,29 @@ img {
              <img src="999.jpeg" alt="School Website" class="project-img">
              <h3>School Website</h3>
              <p>Clean and responsive homepage for a private secondary school with admissions form and gallery.</p>
-             <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
+             
+              <div class="project-links">
+        <a href="https://emmanuelayenioye-debug.github.io/fountain-website/" class="project-link" target="_blank">Live Site <span>↗</span></a>
+    </div>
     </div>
         <div class="card fade-in">
             <img src="999.jpeg" alt="Farm Website" class="project-img">
             <h3>Business Landing Page</h3>
             <p>Modern landing page that increased client leads by 40% in 2 weeks for a Lagos fashion brand.</p>
-            <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
+           
+             <div class="project-links">
+        <a href="https://emmanuelayenioye-debug.github.io/Farm-website/" class="project-link" target="_blank">Live Site <span>↗</span></a>
+    </div>
         </div>
         <div class="card fade-in-right">
             <img src="999.jpeg" alt="Login Page" class="project-img">
             <h3>Login Page UI</h3>
             <p>Minimal and accessible login form with form validation, accessible inputs, dark mode support.</p>
-            <a href="999.jpeg" class="project-link view-img">View Project <span>→</span></a>
+            
+             <div class="project-links">
+        <a href="999.jpeg" class="project-link view-img">Preview <span>→</span></a>
+        <a href="https://your-live-site-url.com" class="project-link" target="_blank">Live Site <span>↗</span></a>
+    </div>
         </div>
     </div>
 </section>
