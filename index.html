@@ -812,6 +812,26 @@ img {
 
 /* Make sure nav is above everything */
 nav { z-index: 9999 !important; position: sticky !important; }
+
+/* FORCE PROJECT LINKS TO BE CLICKABLE */
+.project-link {
+    position: relative !important;
+    z-index: 999 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+.card {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* KILL ANY INVISIBLE OVERLAY */
+#loader.hidden,
+.menu-overlay:not(.active) {
+    display: none !important;
+    pointer-events: none !important;
+}
 </style>
 </head>
 
