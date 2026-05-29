@@ -9,6 +9,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
+/* CSS VARIABLES FOR THEMING */
 :root {
     --bg: #0f172a;
     --bg-dark: #020617;
@@ -23,7 +24,7 @@
     --bg: #f8fafc;
     --bg-dark: #ffffff;
     --card: #ffffff;
-    --accent: #0ea5e9;
+    --accent: #5ab6e0;
     --text: #1e293b;
     --text-muted: #64748b;
     --border: #e2e8f0;
@@ -65,7 +66,6 @@ body{
 #loader.hidden {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
 }
 
 .loader-spinner {
@@ -112,6 +112,19 @@ body{
 }
 .fade-in-right.visible { opacity: 1; transform: translateX(0); }
 
+header {
+    position: -webkit-sticky; /* Safari/iPhone fix */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 5%;
+}
+
+/* NAVBAR + HAMBURGER */
 nav {
     display: flex;
     justify-content: space-between;
@@ -119,15 +132,22 @@ nav {
     padding: 18px 6%;
     background: rgba(2, 6, 23, 0.85);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 100;
     border-bottom: 1px solid var(--border);
+    transition: background 0.4s ease;
 }
 
 [data-theme="light"] nav {
     background: rgba(255, 255, 255, 0.85);
+}
+
+nav h2 {
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.5rem;
+    animation: float 4s ease-in-out infinite;
 }
 
 .logo-img img {
@@ -136,12 +156,17 @@ nav {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--accent);
-    transition: transform 0.3s;
+    animation: float 4s ease-in-out infinite;
 }
 
 .logo-img:hover img {
     transform: scale(1.1);
     border-color: #fff;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
 }
 
 .nav-links {
@@ -166,7 +191,7 @@ nav a::after {
     bottom: -6px;
     left: 0;
     background: var(--accent);
-    transition: width 0.3s;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 nav a:hover { color: var(--accent); }
@@ -202,7 +227,7 @@ nav a:hover::after { width: 100%; }
     transform: rotate(-45deg) translate(8px, -8px);
 }
 
-/* THEME TOGGLE */
+/* THEME TOGGLE BUTTON */
 .theme-toggle {
     background: var(--card);
     border: 1px solid var(--border);
@@ -216,7 +241,6 @@ nav a:hover::after { width: 100%; }
     color: var(--text);
     transition: all 0.3s ease;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -228,6 +252,8 @@ nav a:hover::after { width: 100%; }
 .hero {
     text-align: center;
     padding: 120px 6% 100px;
+    position: relative;
+    overflow: hidden;
     background: radial-gradient(1000px 500px at 50% -20%, rgba(56, 189, 248, 0.2), transparent);
 }
 
@@ -235,6 +261,7 @@ nav a:hover::after { width: 100%; }
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 .typing-text {
@@ -261,7 +288,11 @@ nav a:hover::after { width: 100%; }
     font-size: clamp(1rem, 2.5vw, 1.2rem);
     max-width: 650px;
     margin: 15px auto 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 4s forwards;
 }
+
+@keyframes fadeIn { to { opacity: 1; } }
 
 .btn-group {
     display: flex;
@@ -269,6 +300,8 @@ nav a:hover::after { width: 100%; }
     gap: 15px;
     margin-top: 35px;
     flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 4.5s forwards;
 }
 
 .btn {
@@ -279,15 +312,17 @@ nav a:hover::after { width: 100%; }
     text-decoration: none;
     border-radius: 10px;
     font-weight: 600;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     border: none;
     font-size: 1rem;
     min-width: 150px;
 }
 
+[data-theme="light"] .btn { color: rgba(0, 1, 1, 0.708); }
+
 .btn:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.05);
     box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4);
 }
 
@@ -297,13 +332,15 @@ nav a:hover::after { width: 100%; }
     border: 2px solid var(--accent);
 }
 
-/* SKILLS */
+/* SKILLS BADGES */
 .skills {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
     margin-top: 35px;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 5s forwards;
 }
 
 .skill-badge {
@@ -319,13 +356,12 @@ nav a:hover::after { width: 100%; }
     background: var(--accent);
     color: #0f172a;
     transform: scale(1.05);
+    border-color: var(--accent);
 }
 
-/* SECTIONS - FIXED WIDTH TO STOP SHIFT */
+/* SECTIONS */
 section {
     padding: 80px 6%;
-    max-width: 1200px;
-    margin: 0 auto;
 }
 
 .section-title {
@@ -357,8 +393,9 @@ section {
     padding: 30px 25px;
     border-radius: 16px;
     border: 1px solid var(--border);
-    transition: all 0.4s;
-    width: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
 }
 
 .card:hover {
@@ -375,15 +412,6 @@ section {
 
 .card p { color: var(--text-muted); font-size: 0.95rem; }
 
-.project-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    border: 1px solid var(--border);
-}
-
 .project-link {
     display: inline-flex;
     align-items: center;
@@ -395,16 +423,49 @@ section {
     font-size: 0.95rem;
 }
 
-/* TESTIMONIALS */
+.project-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .project-img {
+        height: 160px;
+    }
+}
+
+.project-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+/* TESTIMONIAL CAROUSEL */
 .testimonials {
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
     overflow: hidden;
 }
 
 .testimonial-wrapper {
     display: flex;
-    transition: transform 0.6s;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .testimonial {
@@ -418,6 +479,7 @@ section {
     border-radius: 16px;
     border: 1px solid var(--border);
     text-align: center;
+    position: relative;
 }
 
 .testimonial-text {
@@ -433,6 +495,7 @@ section {
     align-items: center;
     justify-content: center;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .author-avatar {
@@ -445,6 +508,8 @@ section {
     justify-content: center;
     font-weight: 700;
     color: #fff;
+    font-size: 1.1rem;
+    flex-shrink: 0;
 }
 
 .carousel-controls {
@@ -468,13 +533,14 @@ section {
     transform: scale(1.3);
 }
 
-/* CONTACT */
+/* CONTACT FORM */
 .contact {
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg) 100%);
     border-radius: 20px;
     margin: 0 6%;
     padding: 60px 40px;
     border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
 .contact-container {
@@ -489,6 +555,10 @@ section {
     color: var(--text-muted);
     margin: 15px 0;
     font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .contact-form {
@@ -501,6 +571,13 @@ section {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    text-align: left;
+}
+
+.form-group label {
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .form-group input,
@@ -511,6 +588,8 @@ section {
     border-radius: 10px;
     color: var(--text);
     font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
     width: 100%;
 }
 
@@ -519,6 +598,11 @@ section {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 .success-message {
@@ -538,7 +622,138 @@ footer {
     padding: 30px 20px;
     background: var(--bg-dark);
     color: var(--text-muted);
+    font-size: 0.9rem;
     margin-top: 60px;
+}
+
+/* LIGHTBOX FOR IMAGES */
+.lightbox {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    cursor: zoom-out;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox img {
+    max-width: 95%;
+    max-height: 95%;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+    .contact-info { text-align: center; }
+    .contact-info p { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex !important;
+    }
+    
+    .nav-links {
+        display: none !important; /* HIDE links so they're not beside Work */
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--bg-dark);
+        flex-direction: column;
+        justify-content: center;
+        gap: 35px;
+        padding: 80px 30px;
+        border-left: 1px solid var(--border);
+        transition: right 0.4s ease;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+    }
+    
+    .nav-links.active {
+        display: flex !important; /* ONLY show when menu opens */
+        right: 0;
+    }
+    
+    .nav-links a {
+        font-size: 1.3rem;
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+    }
+    
+    .hero {
+        padding: 80px 6% 60px;
+    }
+
+    .typing-text {
+        display: inline-block;
+        color: var(--accent);
+        border-right: 3px solid var(--accent);
+        white-space: normal;
+        overflow: hidden;
+        word-break: break-word;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .contact {
+        margin: 0 4%;
+        padding: 40px 20px;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* CUSTOM SCROLLBAR - keep this OUTSIDE media query */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 20px;
+}
+
+/* ACTIVE NAV LINKS */
+nav a.active {
+    color: var(--accent);
 }
 
 /* MOBILE MENU OVERLAY */
@@ -557,103 +772,51 @@ footer {
     visibility: visible;
 }
 
-/* MOBILE RESPONSIVE - FIXED MENU */
-@media (max-width: 768px) {
-    /* Show hamburger button */
-    .hamburger {
-        display: flex !important;
-        z-index: 1002;
-    }
-    
-    /* Hide desktop nav, make it slide-in sidebar */
-    .nav-links {
-        position: fixed !important;
-        top: 0 !important;
-        right: -100% !important;
-        width: 80% !important;
-        max-width: 320px !important;
-        height: 100vh !important;
-        background: rgba(2, 6, 23, 0.98) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        flex-direction: column !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-        gap: 35px !important;
-        padding: 100px 30px 30px !important;
-        border-left: 2px solid var(--accent) !important;
-        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: -15px 0 50px rgba(56, 189, 248, 0.4) !important;
-        z-index: 1001 !important;
-        display: flex !important;
-    }
-    
-    /* When active, slide in from right */
-    .nav-links.active {
-        right: 0 !important;
-    }
-    
-    /* Stack links vertically */
-    .nav-links a {
-        font-size: 1.3rem !important;
-        width: 100% !important;
-        text-align: center !important;
-        padding: 12px 0 !important;
-        border-bottom: 1px solid rgba(56, 189, 248, 0.1) !important;
-    }
-    
-    /* Remove underline animation on mobile */
-    .nav-links a::after {
-        display: none !important;
-    }
-    
-    /* Push theme button to bottom */
-    .theme-toggle {
-        margin-top: 40px !important;
-    }
-    
-    /* Make sure nav stays on top of everything */
-    nav {
-        z-index: 1000 !important;
-        position: sticky !important;
-    }
-    
-    .hero {
-        padding: 80px 4% 60px;
-    }
-
-    .typing-text {
-        white-space: normal;
-        border-right: none;
-        animation: none;
-    }
-    
-    .grid {
-        grid-template-columns: 1fr;
-    }
-    
-    section {
-        padding: 60px 4%;
-    }
+/* BETTER CARD EFFECT */
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(56,189,248,0.08),
+        transparent
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-@media (max-width: 400px) {
-    .theme-toggle {
-        font-size: 0;
-        padding: 8px 10px;
-    }
-    .theme-toggle::after {
-        content: '🌙';
-        font-size: 1.2rem;
-    }
-    [data-theme="light"] .theme-toggle::after {
-        content: '☀️';
-    }
+.card:hover::before {
+    opacity: 1;
 }
+
+/* BETTER BUTTON EFFECT */
+.btn:active {
+    transform: scale(0.96);
+}
+
+/* FIX IMAGE OVERFLOW */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* BETTER MOBILE TEXT */
+.hero h1,
+.hero p {
+    word-break: break-word;
+}
+
+/* FORCE SHOW CONTENT EVEN IF LOADER BUGS */
+#loader { display: none !important; }
+
+/* Make sure nav is above everything */
+nav { z-index: 9999 !important; position: sticky !important; }
 </style>
 </head>
 
 <body data-theme="dark">
+    
 
 <!-- LOADING SCREEN -->
 <div id="loader">
@@ -666,8 +829,8 @@ footer {
 <!-- NAVBAR -->
 <nav class="fade-in">
     <a href="#" class="logo-img">
-        <img src="card.jpg" alt="AYENIOYE EMMANUEL">
-    </a>
+    <img src="card.jpg" alt="AYENIOYE EMMANUEL">
+</a>
     <div class="nav-links" id="navLinks">
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#services" onclick="closeMenu()">Services</a>
@@ -703,6 +866,19 @@ footer {
     </div>
 </div>
 
+<!-- Ad Spot 1: After Hero -->
+<div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 <!-- ABOUT -->
 <section id="about" class="fade-in">
     <div class="section-title">
@@ -710,7 +886,7 @@ footer {
         <p>Why clients trust me with their website</p>
     </div>
     <p style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-muted); font-size: clamp(1rem, 2.5vw, 1.1rem);">
-        I’m a frontend developer based in Ado Ekiti with 2+ years of experience turning messy designs into pixel-perfect, mobile-friendly websites. I specialize in fixing broken navbars, responsive issues, and slow load times.
+        I’m a frontend developer based in Ado Ekiti with 2+ years of experience turning messy designs into pixel-perfect, mobile-friendly websites. I specialize in fixing broken navbars, responsive issues, and slow load times so your site looks great on every device and converts visitors into customers.
     </p>
 </section>
 
@@ -759,22 +935,43 @@ footer {
              <img src="999.jpeg" alt="School Website" class="project-img">
              <h3>School Website</h3>
              <p>Clean and responsive homepage for a private secondary school with admissions form and gallery.</p>
-             <a href="https://emmanuelayenioye-debug.github.io/fountain-website/" class="project-link" target="_blank">Live Site ↗</a>
-        </div>
+             
+              <div class="project-links">
+        <a href="https://emmanuelayenioye-debug.github.io/fountain-website/" class="project-link" target="_blank">Live Site <span>↗️</span></a>
+    </div>
+    </div>
         <div class="card fade-in">
             <img src="999.jpeg" alt="Farm Website" class="project-img">
             <h3>Business Landing Page</h3>
             <p>Modern landing page that increased client leads by 40% in 2 weeks for a Lagos fashion brand.</p>
-            <a href="https://emmanuelayenioye-debug.github.io/Farm-website/" class="project-link" target="_blank">Live Site ↗</a>
+           
+             <div class="project-links">
+        <a href="https://emmanuelayenioye-debug.github.io/Farm-website/" class="project-link" target="_blank">Live Site <span>↗️</span></a>
+    </div>
         </div>
         <div class="card fade-in-right">
             <img src="999.jpeg" alt="Login Page" class="project-img">
             <h3>Login Page UI</h3>
-            <p>Minimal and accessible login form with form validation, dark mode support.</p>
-            <a href="https://github.com/emmanuelayenioye-debug/Login-UI-Page.git" class="project-link" target="_blank">Live Site ↗</a>
+            <p>Minimal and accessible login form with form validation, accessible inputs, dark mode support.</p>
+            
+             <div class="project-links">
+        <a href="https://github.com/emmanuelayenioye-debug/Login-UI-Page.git" class="project-link" target="_blank">Live Site <span>↗️</span></a>
+    </div>
         </div>
     </div>
 </section>
+<!-- Ad Spot 2: After Projects -->
+<div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="fade-in">
@@ -786,7 +983,7 @@ footer {
         <div class="testimonial-wrapper" id="testimonialWrapper">
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">AYENIOYE EMMANUEL fixed our school website in 2 weeks after 3 other developers gave up. The mobile version now works perfectly.</p>
+                    <p class="testimonial-text">AYENIOYE EMMANUEL fixed our school website in 2 weeks after 3 other developers gave up. The mobile version now works perfectly and parents can easily register students online.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AS</div>
                         <div class="author-info">
@@ -798,7 +995,7 @@ footer {
             </div>
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">The landing page he built for my farm increased our WhatsApp inquiries by 40% in just two weeks.</p>
+                    <p class="testimonial-text">The landing page he built for my farm increased our WhatsApp inquiries by 40% in just two weeks. With professional and good workers and fast delivery.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">KF</div>
                         <div class="author-info">
@@ -810,12 +1007,12 @@ footer {
             </div>
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">I had a broken navbar that wouldn’t work on iPhone. He solved it in 30 minutes and optimized my site speed.</p>
+                    <p class="testimonial-text">I had a broken navbar that wouldn’t work on iPhone. He solved it in 30 minutes and even optimized my site speed. Highly recommended!</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">TO</div>
                         <div class="author-info">
                             <h4>Akpono Patrick</h4>
-                            <p>Radiant Studio</p>
+                            <p>Radiant Studio. Hair and Make-up Artist</p>
                         </div>
                     </div>
                 </div>
@@ -837,6 +1034,9 @@ footer {
             <p><strong>📧 Email:</strong> emmanuelayenioye@gmail.com</p>
             <p><strong>📍 Location:</strong> Ado Ekiti, Nigeria</p>
             <p><strong>💳 Payment:</strong> OPay, Bank Transfer</p>
+            <p style="margin-top: 25px; color: var(--text-muted);">
+                Fill the form and I’ll reply on WhatsApp within 2 hours during work hours.
+            </p>
         </div>
         <form class="contact-form" id="contactForm">
             <div class="form-group">
@@ -857,33 +1057,37 @@ footer {
     </div>
 </section>
 
+<!-- Ad Spot 3: -->
+<div style="max-width: 1100px; margin: 50px auto 0; padding: 0 6%;">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3273370925270384"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
 <!-- FOOTER -->
 <footer class="fade-in">
     <p>© 2026 EmmzyPluto.Dev.Tech_Hub Built with HTML, CSS & JavaScript.</p>
 </footer>
 
+<!-- LIGHTBOX HTML -->
+<div class="lightbox" id="lightbox">
+    <img src="" alt="Project Preview" id="lightbox-img">
+</div>
+
 <script>
-// LOADING SCREEN - BULLETPROOF
-const loader = document.getElementById('loader');
-
-function hideLoader() {
-    if(loader && !loader.classList.contains('hidden')) {
-        loader.classList.add('hidden');
-    }
+// LOADING SCREEN - FORCE REMOVE AFTER 2 SECONDS
+function killLoader() {
+    const loader = document.getElementById('loader');
+    if(loader) loader.remove();
 }
-
-// Force hide after 2 seconds max
-setTimeout(hideLoader, 2000);
-
-// Hide when page loads
-window.addEventListener('load', () => {
-    setTimeout(hideLoader, 300);
-});
-
-// Backup
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(hideLoader, 1500);
-});
+setTimeout(killLoader, 2000);
+window.addEventListener('load', () => setTimeout(killLoader, 300));
 
 // MOBILE HAMBURGER MENU
 const hamburger = document.getElementById('hamburger');
@@ -933,7 +1137,25 @@ document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el 
     observer.observe(el);
 });
 
-// TESTIMONIAL CAROUSEL
+// ACTIVE NAV LINK - FIXED QUOTES
+const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 200;
+        if (scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+    document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) { // FIXED QUOTES
+            link.classList.add('active');
+        }
+    });
+});
+
+// TESTIMONIAL CAROUSEL - FIXED QUOTES
 const wrapper = document.getElementById('testimonialWrapper');
 const testimonials = document.querySelectorAll('.testimonial');
 const controls = document.getElementById('carouselControls');
@@ -949,7 +1171,7 @@ testimonials.forEach((_, index) => {
 
 function goToSlide(index) {
     currentSlide = index;
-    wrapper.style.transform = `translateX(-${index * 100}%)`;
+    wrapper.style.transform = `translateX(-${index * 100}%)`; // FIXED QUOTES
     document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === index);
     });
@@ -960,28 +1182,41 @@ setInterval(() => {
     goToSlide(currentSlide);
 }, 5000);
 
-// WHATSAPP CONTACT FORM
+// WHATSAPP FORM
 const contactForm = document.getElementById('contactForm');
 const successMessage = document.getElementById('successMessage');
 const yourWhatsAppNumber = '2348109111683';
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    
     const whatsappMessage = `Hello AYENIOYE EMMANUEL!%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Message:* ${message}`;
     const whatsappURL = `https://wa.me/${yourWhatsAppNumber}?text=${whatsappMessage}`;
-    
     successMessage.style.display = 'block';
-    
     setTimeout(() => {
         window.open(whatsappURL, '_blank');
         contactForm.reset();
         successMessage.style.display = 'none';
     }, 1000);
+});
+
+// LIGHTBOX
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+document.querySelectorAll('.view-img').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        lightboxImg.src = link.getAttribute('href');
+        lightbox.classList.add('active');
+    });
+});
+lightbox.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lightbox.classList.remove('active');
 });
 </script>
 
