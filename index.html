@@ -9,7 +9,6 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-/* CSS VARIABLES FOR THEMING */
 :root {
     --bg: #0f172a;
     --bg-dark: #020617;
@@ -24,7 +23,7 @@
     --bg: #f8fafc;
     --bg-dark: #ffffff;
     --card: #ffffff;
-    --accent: #5ab6e0;
+    --accent: #0ea5e9;
     --text: #1e293b;
     --text-muted: #64748b;
     --border: #e2e8f0;
@@ -39,7 +38,7 @@
 
 html { scroll-behavior: smooth; }
 
-body {
+body{
     -webkit-font-smoothing: antialiased;
     background: var(--bg);
     color: var(--text);
@@ -66,6 +65,7 @@ body {
 #loader.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .loader-spinner {
@@ -112,7 +112,6 @@ body {
 }
 .fade-in-right.visible { opacity: 1; transform: translateX(0); }
 
-/* NAVBAR + HAMBURGER */
 nav {
     display: flex;
     justify-content: space-between;
@@ -120,22 +119,15 @@ nav {
     padding: 18px 6%;
     background: rgba(2, 6, 23, 0.85);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
     z-index: 100;
     border-bottom: 1px solid var(--border);
-    transition: background 0.4s ease;
 }
 
 [data-theme="light"] nav {
     background: rgba(255, 255, 255, 0.85);
-}
-
-nav h2 {
-    color: var(--accent);
-    font-weight: 800;
-    font-size: 1.5rem;
-    animation: float 4s ease-in-out infinite;
 }
 
 .logo-img img {
@@ -144,17 +136,12 @@ nav h2 {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--accent);
-    animation: float 4s ease-in-out infinite;
+    transition: transform 0.3s;
 }
 
 .logo-img:hover img {
     transform: scale(1.1);
     border-color: #fff;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
 }
 
 .nav-links {
@@ -179,7 +166,7 @@ nav a::after {
     bottom: -6px;
     left: 0;
     background: var(--accent);
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.3s;
 }
 
 nav a:hover { color: var(--accent); }
@@ -215,7 +202,7 @@ nav a:hover::after { width: 100%; }
     transform: rotate(-45deg) translate(8px, -8px);
 }
 
-/* THEME TOGGLE BUTTON */
+/* THEME TOGGLE */
 .theme-toggle {
     background: var(--card);
     border: 1px solid var(--border);
@@ -229,6 +216,7 @@ nav a:hover::after { width: 100%; }
     color: var(--text);
     transition: all 0.3s ease;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -240,8 +228,6 @@ nav a:hover::after { width: 100%; }
 .hero {
     text-align: center;
     padding: 120px 6% 100px;
-    position: relative;
-    overflow: hidden;
     background: radial-gradient(1000px 500px at 50% -20%, rgba(56, 189, 248, 0.2), transparent);
 }
 
@@ -249,7 +235,6 @@ nav a:hover::after { width: 100%; }
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 800;
     margin-bottom: 20px;
-    line-height: 1.2;
 }
 
 .typing-text {
@@ -276,11 +261,7 @@ nav a:hover::after { width: 100%; }
     font-size: clamp(1rem, 2.5vw, 1.2rem);
     max-width: 650px;
     margin: 15px auto 0;
-    opacity: 0;
-    animation: fadeIn 1s ease-out 4s forwards;
 }
-
-@keyframes fadeIn { to { opacity: 1; } }
 
 .btn-group {
     display: flex;
@@ -288,8 +269,6 @@ nav a:hover::after { width: 100%; }
     gap: 15px;
     margin-top: 35px;
     flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeIn 1s ease-out 4.5s forwards;
 }
 
 .btn {
@@ -300,17 +279,15 @@ nav a:hover::after { width: 100%; }
     text-decoration: none;
     border-radius: 10px;
     font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s;
     cursor: pointer;
     border: none;
     font-size: 1rem;
     min-width: 150px;
 }
 
-[data-theme="light"] .btn { color: rgba(0, 1, 1, 0.708); }
-
 .btn:hover {
-    transform: translateY(-6px) scale(1.05);
+    transform: translateY(-6px);
     box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4);
 }
 
@@ -320,15 +297,13 @@ nav a:hover::after { width: 100%; }
     border: 2px solid var(--accent);
 }
 
-/* SKILLS BADGES */
+/* SKILLS */
 .skills {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
     margin-top: 35px;
-    opacity: 0;
-    animation: fadeIn 1s ease-out 5s forwards;
 }
 
 .skill-badge {
@@ -344,12 +319,13 @@ nav a:hover::after { width: 100%; }
     background: var(--accent);
     color: #0f172a;
     transform: scale(1.05);
-    border-color: var(--accent);
 }
 
-/* SECTIONS */
+/* SECTIONS - FIXED WIDTH TO STOP SHIFT */
 section {
     padding: 80px 6%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .section-title {
@@ -381,9 +357,8 @@ section {
     padding: 30px 25px;
     border-radius: 16px;
     border: 1px solid var(--border);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
+    transition: all 0.4s;
+    width: 100%;
 }
 
 .card:hover {
@@ -400,17 +375,6 @@ section {
 
 .card p { color: var(--text-muted); font-size: 0.95rem; }
 
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 18px;
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
 .project-img {
     width: 100%;
     height: 180px;
@@ -420,40 +384,27 @@ section {
     border: 1px solid var(--border);
 }
 
-@media (max-width: 768px) {
-    .project-img {
-        height: 160px;
-    }
-}
-
-.project-links {
-    display: flex;
-    gap: 15px;
-    margin-top: 18px;
-    flex-wrap: wrap;
-}
-
 .project-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    margin-top: 18px;
     color: var(--accent);
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
 }
 
-/* TESTIMONIAL CAROUSEL */
+/* TESTIMONIALS */
 .testimonials {
     max-width: 900px;
     margin: 0 auto;
-    position: relative;
     overflow: hidden;
 }
 
 .testimonial-wrapper {
     display: flex;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.6s;
 }
 
 .testimonial {
@@ -467,7 +418,6 @@ section {
     border-radius: 16px;
     border: 1px solid var(--border);
     text-align: center;
-    position: relative;
 }
 
 .testimonial-text {
@@ -483,7 +433,6 @@ section {
     align-items: center;
     justify-content: center;
     gap: 12px;
-    flex-wrap: wrap;
 }
 
 .author-avatar {
@@ -496,8 +445,6 @@ section {
     justify-content: center;
     font-weight: 700;
     color: #fff;
-    font-size: 1.1rem;
-    flex-shrink: 0;
 }
 
 .carousel-controls {
@@ -521,14 +468,13 @@ section {
     transform: scale(1.3);
 }
 
-/* CONTACT FORM */
+/* CONTACT */
 .contact {
     background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg) 100%);
     border-radius: 20px;
     margin: 0 6%;
     padding: 60px 40px;
     border: 1px solid var(--border);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
 .contact-container {
@@ -543,10 +489,6 @@ section {
     color: var(--text-muted);
     margin: 15px 0;
     font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
 }
 
 .contact-form {
@@ -559,13 +501,6 @@ section {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    text-align: left;
-}
-
-.form-group label {
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.9rem;
 }
 
 .form-group input,
@@ -576,8 +511,6 @@ section {
     border-radius: 10px;
     color: var(--text);
     font-size: 1rem;
-    font-family: 'Inter', sans-serif;
-    transition: all 0.3s ease;
     width: 100%;
 }
 
@@ -586,11 +519,6 @@ section {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.1);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
 }
 
 .success-message {
@@ -610,127 +538,7 @@ footer {
     padding: 30px 20px;
     background: var(--bg-dark);
     color: var(--text-muted);
-    font-size: 0.9rem;
     margin-top: 60px;
-}
-
-/* LIGHTBOX FOR IMAGES */
-.lightbox {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 20px;
-    cursor: zoom-out;
-}
-
-.lightbox.active {
-    display: flex;
-}
-
-.lightbox img {
-    max-width: 95%;
-    max-height: 95%;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    animation: zoomIn 0.3s ease;
-}
-
-@keyframes zoomIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 900px) {
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 35px;
-    }
-    .contact-info { text-align: center; }
-    .contact-info p { justify-content: center; }
-}
-
-@media (max-width: 768px) {
-    .hamburger {
-        display: flex;
-    }
-    
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 75%;
-        max-width: 300px;
-        height: 100vh;
-        background: var(--bg-dark);
-        flex-direction: column;
-        justify-content: center;
-        gap: 35px;
-        padding: 80px 30px;
-        border-left: 1px solid var(--border);
-        transition: right 0.4s ease;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-    }
-    
-    .nav-links.active {
-        right: 0;
-    }
-    
-    .hero {
-        padding: 80px 6% 60px;
-    }
-
-    .typing-text {
-    display: inline-block;
-    color: var(--accent);
-    border-right: 3px solid var(--accent);
-    white-space: normal;
-    overflow: hidden;
-    word-break: break-word;
-}
-    
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .contact {
-        margin: 0 4%;
-        padding: 40px 20px;
-    }
-    
-    .btn {
-        width: 100%;
-        max-width: 280px;
-    }
-    
-    .btn-group {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    /* CUSTOM SCROLLBAR */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-dark);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 20px;
-}
-
-/* ACTIVE NAV LINKS */
-nav a.active {
-    color: var(--accent);
 }
 
 /* MOBILE MENU OVERLAY */
@@ -749,46 +557,103 @@ nav a.active {
     visibility: visible;
 }
 
-/* BETTER CARD EFFECT */
-.card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(56,189,248,0.08),
-        transparent
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
+/* MOBILE RESPONSIVE - FIXED MENU */
+@media (max-width: 768px) {
+    /* Show hamburger button */
+    .hamburger {
+        display: flex !important;
+        z-index: 1002;
+    }
+    
+    /* Hide desktop nav, make it slide-in sidebar */
+    .nav-links {
+        position: fixed !important;
+        top: 0 !important;
+        right: -100% !important;
+        width: 80% !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        background: rgba(2, 6, 23, 0.98) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 35px !important;
+        padding: 100px 30px 30px !important;
+        border-left: 2px solid var(--accent) !important;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: -15px 0 50px rgba(56, 189, 248, 0.4) !important;
+        z-index: 1001 !important;
+        display: flex !important;
+    }
+    
+    /* When active, slide in from right */
+    .nav-links.active {
+        right: 0 !important;
+    }
+    
+    /* Stack links vertically */
+    .nav-links a {
+        font-size: 1.3rem !important;
+        width: 100% !important;
+        text-align: center !important;
+        padding: 12px 0 !important;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.1) !important;
+    }
+    
+    /* Remove underline animation on mobile */
+    .nav-links a::after {
+        display: none !important;
+    }
+    
+    /* Push theme button to bottom */
+    .theme-toggle {
+        margin-top: 40px !important;
+    }
+    
+    /* Make sure nav stays on top of everything */
+    nav {
+        z-index: 1000 !important;
+        position: sticky !important;
+    }
+    
+    .hero {
+        padding: 80px 4% 60px;
+    }
+
+    .typing-text {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+    }
+    
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    
+    section {
+        padding: 60px 4%;
+    }
 }
 
-.card:hover::before {
-    opacity: 1;
-}
-
-/* BETTER BUTTON EFFECT */
-.btn:active {
-    transform: scale(0.96);
-}
-
-/* FIX IMAGE OVERFLOW */
-img {
-    max-width: 100%;
-    display: block;
-}
-
-/* BETTER MOBILE TEXT */
-.hero h1,
-.hero p {
-    word-break: break-word;
-}
+@media (max-width: 400px) {
+    .theme-toggle {
+        font-size: 0;
+        padding: 8px 10px;
+    }
+    .theme-toggle::after {
+        content: '🌙';
+        font-size: 1.2rem;
+    }
+    [data-theme="light"] .theme-toggle::after {
+        content: '☀️';
+    }
 }
 </style>
 </head>
 
 <body data-theme="dark">
-    
 
 <!-- LOADING SCREEN -->
 <div id="loader">
@@ -801,8 +666,8 @@ img {
 <!-- NAVBAR -->
 <nav class="fade-in">
     <a href="#" class="logo-img">
-    <img src="card.jpg" alt="AYENIOYE EMMANUEL">
-</a>
+        <img src="card.jpg" alt="AYENIOYE EMMANUEL">
+    </a>
     <div class="nav-links" id="navLinks">
         <a href="#about" onclick="closeMenu()">About</a>
         <a href="#services" onclick="closeMenu()">Services</a>
@@ -838,19 +703,6 @@ img {
     </div>
 </div>
 
-<!-- Ad Spot 1: After Hero -->
-<div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-3273370925270384"
-       data-ad-slot="1234567890"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-</div>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!-- ABOUT -->
 <section id="about" class="fade-in">
     <div class="section-title">
@@ -858,7 +710,7 @@ img {
         <p>Why clients trust me with their website</p>
     </div>
     <p style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-muted); font-size: clamp(1rem, 2.5vw, 1.1rem);">
-        I’m a frontend developer based in Ado Ekiti with 2+ years of experience turning messy designs into pixel-perfect, mobile-friendly websites. I specialize in fixing broken navbars, responsive issues, and slow load times so your site looks great on every device and converts visitors into customers.
+        I’m a frontend developer based in Ado Ekiti with 2+ years of experience turning messy designs into pixel-perfect, mobile-friendly websites. I specialize in fixing broken navbars, responsive issues, and slow load times.
     </p>
 </section>
 
@@ -907,44 +759,22 @@ img {
              <img src="999.jpeg" alt="School Website" class="project-img">
              <h3>School Website</h3>
              <p>Clean and responsive homepage for a private secondary school with admissions form and gallery.</p>
-             
-              <div class="project-links">
-        <a href="https://emmanuelayenioye-debug.github.io/fountain-website/" class="project-link" target="_blank">Live Site <span>↗</span></a>
-    </div>
-    </div>
+             <a href="https://emmanuelayenioye-debug.github.io/fountain-website/" class="project-link" target="_blank">Live Site ↗</a>
+        </div>
         <div class="card fade-in">
             <img src="999.jpeg" alt="Farm Website" class="project-img">
             <h3>Business Landing Page</h3>
             <p>Modern landing page that increased client leads by 40% in 2 weeks for a Lagos fashion brand.</p>
-           
-             <div class="project-links">
-        <a href="https://emmanuelayenioye-debug.github.io/Farm-website/" class="project-link" target="_blank">Live Site <span>↗</span></a>
-    </div>
+            <a href="https://emmanuelayenioye-debug.github.io/Farm-website/" class="project-link" target="_blank">Live Site ↗</a>
         </div>
         <div class="card fade-in-right">
             <img src="999.jpeg" alt="Login Page" class="project-img">
             <h3>Login Page UI</h3>
-            <p>Minimal and accessible login form with form validation, accessible inputs, dark mode support.</p>
-            
-             <div class="project-links">
-        <a href="999.jpeg" class="project-link view-img">Preview <span>→</span></a>
-        <a href="https://your-live-site-url.com" class="project-link" target="_blank">Live Site <span>↗</span></a>
-    </div>
+            <p>Minimal and accessible login form with form validation, dark mode support.</p>
+            <a href="https://github.com/emmanuelayenioye-debug/Login-UI-Page.git" class="project-link" target="_blank">Live Site ↗</a>
         </div>
     </div>
 </section>
-<!-- Ad Spot 2: After Projects -->
-<div style="max-width: 1100px; margin: 50px auto; padding: 0 6%;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-3273370925270384"
-       data-ad-slot="1234567890"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-</div>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 <!-- TESTIMONIALS -->
 <section id="testimonials" class="fade-in">
@@ -956,7 +786,7 @@ img {
         <div class="testimonial-wrapper" id="testimonialWrapper">
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">AYENIOYE EMMANUEL fixed our school website in 2 weeks after 3 other developers gave up. The mobile version now works perfectly and parents can easily register students online.</p>
+                    <p class="testimonial-text">AYENIOYE EMMANUEL fixed our school website in 2 weeks after 3 other developers gave up. The mobile version now works perfectly.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">AS</div>
                         <div class="author-info">
@@ -968,7 +798,7 @@ img {
             </div>
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">The landing page he built for my farm increased our WhatsApp inquiries by 40% in just two weeks. With professional and good workers and fast delivery.</p>
+                    <p class="testimonial-text">The landing page he built for my farm increased our WhatsApp inquiries by 40% in just two weeks.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">KF</div>
                         <div class="author-info">
@@ -980,12 +810,12 @@ img {
             </div>
             <div class="testimonial">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">I had a broken navbar that wouldn’t work on iPhone. He solved it in 30 minutes and even optimized my site speed. Highly recommended!</p>
+                    <p class="testimonial-text">I had a broken navbar that wouldn’t work on iPhone. He solved it in 30 minutes and optimized my site speed.</p>
                     <div class="testimonial-author">
                         <div class="author-avatar">TO</div>
                         <div class="author-info">
                             <h4>Akpono Patrick</h4>
-                            <p>Radiant Studio. Hair and Make-up Artist</p>
+                            <p>Radiant Studio</p>
                         </div>
                     </div>
                 </div>
@@ -1007,9 +837,6 @@ img {
             <p><strong>📧 Email:</strong> emmanuelayenioye@gmail.com</p>
             <p><strong>📍 Location:</strong> Ado Ekiti, Nigeria</p>
             <p><strong>💳 Payment:</strong> OPay, Bank Transfer</p>
-            <p style="margin-top: 25px; color: var(--text-muted);">
-                Fill the form and I’ll reply on WhatsApp within 2 hours during work hours.
-            </p>
         </div>
         <form class="contact-form" id="contactForm">
             <div class="form-group">
@@ -1030,35 +857,32 @@ img {
     </div>
 </section>
 
-<!-- Ad Spot 3: -->
-<div style="max-width: 1100px; margin: 50px auto 0; padding: 0 6%;">
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-3273370925270384"
-       data-ad-slot="1234567890"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-</div>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 <!-- FOOTER -->
 <footer class="fade-in">
     <p>© 2026 EmmzyPluto.Dev.Tech_Hub Built with HTML, CSS & JavaScript.</p>
 </footer>
 
-<!-- LIGHTBOX HTML -->
-<div class="lightbox" id="lightbox">
-    <img src="" alt="Project Preview" id="lightbox-img">
-</div>
-
 <script>
-// LOADING SCREEN
+// LOADING SCREEN - BULLETPROOF
+const loader = document.getElementById('loader');
+
+function hideLoader() {
+    if(loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
+    }
+}
+
+// Force hide after 2 seconds max
+setTimeout(hideLoader, 2000);
+
+// Hide when page loads
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loader').classList.add('hidden');
-    }, 1000);
+    setTimeout(hideLoader, 300);
+});
+
+// Backup
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(hideLoader, 1500);
 });
 
 // MOBILE HAMBURGER MENU
@@ -1080,13 +904,6 @@ function closeMenu() {
 
 menuOverlay.addEventListener('click', closeMenu);
 
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) &&
-        !navLinks.contains(e.target)) {
-        closeMenu();
-    }
-});
-
 // THEME TOGGLE
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
@@ -1103,39 +920,17 @@ const savedTheme = localStorage.getItem('theme') || 'dark';
 body.setAttribute('data-theme', savedTheme);
 themeToggle.textContent = savedTheme === 'dark' ? '🌙 Dark' : '☀️ Light';
 
-// SCROLL-TRIGGERED ANIMATIONS
+// SCROLL ANIMATIONS
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
         }
     });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.15 });
 
 document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
     observer.observe(el);
-});
-// ACTIVE NAV LINK ON SCROLL
-const sections = document.querySelectorAll('section');
-
-window.addEventListener('scroll', () => {
-    let current = '';
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop - 200;
-
-        if (scrollY >= sectionTop) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    document.querySelectorAll('nav a').forEach(link => {
-        link.classList.remove('active');
-
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
 });
 
 // TESTIMONIAL CAROUSEL
@@ -1188,30 +983,6 @@ contactForm.addEventListener('submit', (e) => {
         successMessage.style.display = 'none';
     }, 1000);
 });
-
-// LIGHTBOX FOR PROJECT IMAGES
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-
-document.querySelectorAll('.view-img').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        lightboxImg.src = link.getAttribute('href');
-        lightbox.classList.add('active');
-    });
-});
-
-lightbox.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-});
-// CLOSE LIGHTBOX WITH ESC KEY
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        lightbox.classList.remove('active');
-    }
-});
-
-
 </script>
 
 </body>
